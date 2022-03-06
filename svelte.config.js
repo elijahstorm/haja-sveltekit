@@ -6,9 +6,9 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		paths: {
-			base: '/_'
-		},
+		// paths: {
+		// 	base: '/_'
+		// },
 		adapter: adapter({
 			hostineSite: 'data',
 			fallback: 'index.html'
