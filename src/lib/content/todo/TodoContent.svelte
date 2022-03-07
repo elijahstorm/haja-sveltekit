@@ -1,0 +1,51 @@
+<script lang="ts">
+	import type { TodoContentConfig } from './TodoContent';
+	import img404 from '$lib/images/404.png';
+	import Icon from '@iconify/svelte';
+
+	export let todo: TodoContentConfig;
+
+	let color = todo.color == '' ? 'var(--primary)' : `#${todo.color}`;
+	let icon = todo.status == 'done' ? 'akar-icons:circle-check-fill' : 'akar-icons:circle';
+	const timeStr = new Date(todo.date).toLocaleTimeString([], {
+		hour: '2-digit',
+		minute: '2-digit'
+	});
+	const dateStr = new Date(todo.date).toLocaleDateString([], {
+		weekday: 'short',
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric'
+	});
+</script>
+
+{#if todo.status != '[broken]'}
+	<div class="flex">
+		<Icon {color} style="font-size: 30px;" {icon} />
+		<div class="todo">
+			<span class="bold">{todo.title}</span>
+			<span class="date">
+				{timeStr} : {dateStr}
+			</span>
+		</div>
+	</div>
+{:else}
+	<img src={img404} alt="todo not found" />
+{/if}
+
+<style>
+	.flex {
+		display: flex;
+		gap: var(--default-padding);
+	}
+	.todo {
+		font-size: 20px;
+		margin: auto 0;
+	}
+	.bold {
+		font-weight: bold;
+	}
+	.date {
+		opacity: 0.6;
+	}
+</style>

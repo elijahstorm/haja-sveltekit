@@ -1,0 +1,9 @@
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+haja-project-315871-63b1613d3303.json

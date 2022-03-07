@@ -1,0 +1,21 @@
+:global(:root) {
+	--primary: #41a7fa;
+	--primary-hl: #6abcff;
+	--secondary: #60dfcd;
+	--card: #e2f2ff;
+	--bg: #f8f9fa;
+	--text: #000000;
+	--canvas: #e6e4ef;
+	--small-radius: 12px;
+	--button-padding: 18px 14px;
+	--short-transition: 0.3s;
+}
+
+:global(body) {
+	background: var(--secondary);
+	font: 'Roboto';
+}
+
+:global(img) {
+	width: 100%;
+}
