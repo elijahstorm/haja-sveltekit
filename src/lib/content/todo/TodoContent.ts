@@ -19,7 +19,10 @@ export const getTodo = async ({ source, isTeam = false, id }): Promise<TodoConte
 			id: data.id,
 			title: data.title,
 			caption: data.caption,
-			color: data.color,
+			color:
+				data.color == ''
+					? 'var(--primary)'
+					: `#${data.color.substring(2) + data.color.substring(0, 2)}`,
 			date: data.date.toDate(),
 			status: data.status,
 			type: data.type

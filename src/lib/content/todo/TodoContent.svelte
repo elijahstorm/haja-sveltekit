@@ -5,8 +5,8 @@
 
 	export let todo: TodoContentConfig;
 
-	let color = todo.color == '' ? 'var(--primary)' : `#${todo.color}`;
-	let icon = todo.status == 'done' ? 'akar-icons:circle-check-fill' : 'akar-icons:circle';
+	const color = todo.color;
+	const icon = todo.status == 'done' ? 'akar-icons:circle-check-fill' : 'akar-icons:circle';
 	const timeStr = new Date(todo.date).toLocaleTimeString([], {
 		hour: '2-digit',
 		minute: '2-digit'
