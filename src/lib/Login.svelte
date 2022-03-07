@@ -13,7 +13,7 @@
 	{#if user}
 		<div on:click={() => signOut()} class="button color primary">
 			<span>Logout</span>
-			<Icon icon={'ion:exit-outline'} width={22} />
+			<Icon icon={'fe:logout'} width={22} />
 		</div>
 	{:else}
 		<div on:click={login} class="button color primary">
@@ -24,12 +24,16 @@
 </section>
 
 <style>
+	section {
+		margin: auto;
+	}
 	section > div {
 		display: flex;
 	}
 	span {
 		padding-right: calc(var(--default-padding) / 2);
 		margin: auto;
+		padding-top: 2px;
 	}
 	.button {
 		border: 1px var(--text) solid;
