@@ -1,16 +1,17 @@
 <script lang="ts">
-	import Casing from '$lib/Casing.svelte';
+	import Casing from '$lib/UI/PageContainers/Casing.svelte';
 	import Grid from 'svelte-grid';
 	import gridHelp from 'svelte-grid/build/helper/index.mjs';
-	import showcase1 from '$lib/images/showcase/09-1.jpg';
-	import showcase2 from '$lib/images/showcase/10.jpg';
-	import showcase3 from '$lib/images/showcase/11-3.jpg';
-	import showcase4 from '$lib/images/showcase/11-8.jpg';
-	import showcase5 from '$lib/images/showcase/11-11.jpg';
-	import showcase6 from '$lib/images/showcase/11-12.jpg';
 
 	const { item } = gridHelp;
-	const imgs = [showcase1, showcase2, showcase3, showcase4, showcase5, showcase6];
+	const imgs = [
+		'showcase/09-1.jpg',
+		'showcase/10.jpg',
+		'showcase/11-3.jpg',
+		'showcase/11-8.jpg',
+		'showcase/11-11.jpg',
+		'showcase/11-12.jpg'
+	];
 	let items = [];
 	const h = 4;
 	for (let i in imgs) {

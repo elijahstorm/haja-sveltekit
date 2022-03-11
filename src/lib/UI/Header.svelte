@@ -1,9 +1,9 @@
 <script lang="ts">
-	import logo from '$lib/images/haja logo_horizontal_full.png';
 	import { goto } from '$app/navigation';
-	import BackButton from './BackButton.svelte';
-	import Login from './Login.svelte';
+	import BackButton from '$lib/UI/BackButton.svelte';
+	import Login from '$lib/UI/Login.svelte';
 	export let backBtn: boolean = true;
+	const logo = 'haja/logo_horizontal_full.png';
 </script>
 
 <div class="flex">

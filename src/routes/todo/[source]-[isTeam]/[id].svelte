@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Casing from '$lib/Casing.svelte';
+	import Casing from '$lib/UI/PageContainers/Casing.svelte';
 	import ContentContainer from '$lib/content/ContentContainer.svelte';
 	import TodoContent from '$lib/content/todo/TodoContent.svelte';
 	import type { TodoContentConfig } from 'src/lib/content/todo/TodoContent';

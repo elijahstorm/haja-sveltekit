@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import firstImage from '$lib/images/showcase/01-1.jpg';
-	import secondImage from '$lib/images/showcase/01-2.jpg';
+
+	const firstImage = '/showcase/01-1.jpg';
+	const secondImage = '/showcase/01-2.jpg';
 
 	let first, second;
 	const next = () => {

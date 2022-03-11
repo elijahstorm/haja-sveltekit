@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { TodoContentConfig } from './TodoContent';
-	import img404 from '$lib/images/404.png';
 	import Icon from '@iconify/svelte';
 
 	export let todo: TodoContentConfig;
 
+	const img404 = '/404.png';
 	const color = todo.color;
 	const icon = todo.status == 'done' ? 'akar-icons:circle-check-fill' : 'akar-icons:circle';
 	const timeStr = new Date(todo.date).toLocaleTimeString([], {

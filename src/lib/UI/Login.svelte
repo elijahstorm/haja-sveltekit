@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { googleLogin, signOut } from '$lib/firebase';
+	import { goto } from '$app/navigation';
+
+	import { signOut } from '$lib/firebase';
 	import Icon from '@iconify/svelte';
 
 	function login() {
-		googleLogin();
+		goto('login');
 	}
 
 	let user;

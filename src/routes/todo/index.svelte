@@ -1,4 +1,6 @@
 <script lang="ts">
+	import HalfPageInfoAndGraphic from '$lib/UI/PageContainers/HalfPageInfoAndGraphic.svelte';
+
 	export function load({ params }) {
 		return {
 			props: {
@@ -8,4 +10,4 @@
 	}
 </script>
 
-<div>error</div>
+<HalfPageInfoAndGraphic icon={'events'}>This Todo doesn't exist! :(</HalfPageInfoAndGraphic>
