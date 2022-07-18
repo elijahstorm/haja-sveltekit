@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Icon from '@iconify/svelte';
+	import Icon from "@iconify/svelte"
 </script>
 
 <div class="center" on:click={() => history.back()}>
-	<Icon icon={'akar-icons:chevron-left'} color={'var(--primary)'} height={34} />
+	<Icon icon={"akar-icons:chevron-left"} color={"var(--primary)"} height={34} />
 </div>
 
 <style>

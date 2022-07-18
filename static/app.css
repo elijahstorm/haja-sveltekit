@@ -4,7 +4,8 @@
 	--primary-o: #6abcff77;
 	--accent: #76c8e0;
 	--secondary: #60dfcd;
-	--error: #ff0000;
+	--error: #c20707;
+	--error-soft: #de7575;
 	--secondary: #00000000;
 	--card: #e2f2ff;
 	--bg: #f8f9fa;
@@ -177,7 +178,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-	content: '';
+	content: "";
 	content: none;
 }
 table {

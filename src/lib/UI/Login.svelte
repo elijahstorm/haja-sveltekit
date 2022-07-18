@@ -1,26 +1,26 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto } from "$app/navigation"
 
-	import { signOut } from '$lib/firebase';
-	import Icon from '@iconify/svelte';
+	import { signOut } from "$lib/firebase"
+	import Icon from "@iconify/svelte"
 
 	function login() {
-		goto('login');
+		goto("login")
 	}
 
-	let user;
+	let user
 </script>
 
 <section>
 	{#if user}
 		<div on:click={() => signOut()} class="button color primary">
 			<span>Logout</span>
-			<Icon icon={'fe:logout'} width={22} />
+			<Icon icon={"fe:logout"} width={22} />
 		</div>
 	{:else}
 		<div on:click={login} class="button color primary">
 			<span>Login</span>
-			<Icon icon={'akar-icons:google-fill'} width={22} />
+			<Icon icon={"akar-icons:google-fill"} width={22} />
 		</div>
 	{/if}
 </section>

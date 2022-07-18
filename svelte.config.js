@@ -1,5 +1,5 @@
-import adapter from '@sveltejs/adapter-node';
-import preprocess from 'svelte-preprocess';
+import adapter from "@sveltejs/adapter-node"
+import preprocess from "svelte-preprocess"
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -10,10 +10,10 @@ const config = {
 		// 	base: '/_'
 		// },
 		adapter: adapter({
-			hostineSite: 'data',
-			fallback: 'index.html'
+			hostineSite: "data",
+			fallback: "index.html"
 		})
 	}
-};
+}
 
-export default config;
+export default config

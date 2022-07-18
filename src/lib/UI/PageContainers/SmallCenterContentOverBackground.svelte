@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Header from "$lib/UI/Header.svelte"
-	export let backBtn: boolean = true
+	import Logo from "$lib/UI/Branding/Logo.svelte"
 </script>
 
 <svelte:head>
@@ -13,8 +12,10 @@
 </svelte:head>
 
 <div class="container">
-	<Header {backBtn} />
-	<div class="padding-bottom" />
+	<div class="logo">
+		<Logo url={"/haja/logo_horizontal_white.png"} height={200} />
+	</div>
+
 	<slot />
 </div>
 
@@ -24,16 +25,23 @@
 	}
 
 	.container {
-		max-width: 900px;
-		padding: 64px 184px;
-	}
-	.padding-bottom {
-		padding-bottom: var(--default-padding);
+		display: flex;
+		background-color: var(--bg);
+		padding: 1rem 4rem 4rem 4rem;
+		display: flex;
+		height: 100vh;
+		flex-direction: column;
+		flex: 2;
+		background-color: var(--primary);
+		user-select: none;
+		-webkit-user-select: none;
 	}
 
-	@media only screen and (max-width: 800px) {
-		.container {
-			padding: 64px 7%;
-		}
+	.logo {
+		margin: 0 auto 0.5rem auto;
+		width: 100%;
+		max-width: 200px;
+		max-height: 100%;
+		text-align: center;
 	}
 </style>

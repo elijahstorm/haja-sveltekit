@@ -1,22 +1,31 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { googleLogin } from "$lib/firebase"
+	import { onMount } from "svelte"
 
-	let section;
+	function loginWithGoogle() {
+		googleLogin()
+	}
+
+	let section
 	onMount(() => {
-		section.classList.remove('shrunk');
-	});
+		section.classList.remove("shrunk")
+	})
 
-	let form;
+	let form
 
 	function attempt() {
-		form.classList.remove('unattempted');
+		form.classList.remove("unattempted")
 	}
 </script>
 
 <section bind:this={section} class="shrunk">
 	<form class="content unattempted" action="/action_page.php" method="post" bind:this={form}>
 		<div class="container">
-			<div class="header">Login to Haja</div>
+			<div class="header">
+				<span> Login to </span>
+
+				<img class="logo" src="/haja/logo_horizontal_full.png" alt="haja" />
+			</div>
 			<label for="uname"><b>Username</b></label>
 			<input type="text" placeholder="Enter Username" name="uname" required />
 
@@ -25,13 +34,12 @@
 
 			<button on:click={attempt}>Login</button>
 
-			<span class="help">
+			<p class="help">
 				Help finding your
-				<a href="">an ID</a>
+				<a href="/login/help/lost-email">an ID</a>
 				or
-				<a href="">password</a>
-			</span>
-			<!-- <button class="destructive"> Forgot password? </button> -->
+				<a href="/login/help/forgot-password">password</a>
+			</p>
 		</div>
 	</form>
 </section>
@@ -48,8 +56,8 @@
 		letter-spacing: 0px;
 	}
 
-	input[type='text'],
-	input[type='password'] {
+	input[type="text"],
+	input[type="password"] {
 		width: 100%;
 		padding: 0.5rem 1rem;
 		margin: 0.5rem 0 1rem 0;
@@ -60,7 +68,7 @@
 		border-radius: 3rem;
 		transition: 0.3s;
 		/* box-shadow: 0px 0px 1px 1px #0000004a; */
-		background-color: #0000004a;
+		background-color: #00000013;
 	}
 	input:focus {
 		border: 0;
@@ -87,14 +95,6 @@
 		box-shadow: 0px 6px 7px 2px var(--primary-o);
 	}
 
-	button.destructive {
-		margin: 0;
-		background-color: var(--bg);
-		color: var(--primary);
-		border: var(--primary-o) solid 2px;
-		padding: 0.5rem;
-	}
-
 	button:hover {
 		opacity: 0.8;
 	}
@@ -104,6 +104,7 @@
 	}
 
 	.help {
+		margin-top: 1rem;
 		font-weight: 300;
 	}
 	.help > a {
@@ -120,10 +121,19 @@
 	.header {
 		margin: 1rem 0 3rem 0;
 		font-size: 20px;
+		display: flex;
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+	.header > * {
+		align-self: center;
+	}
+
+	.logo {
+		width: 6rem;
 	}
 
 	.content {
 		background-color: var(--bg);
-		/* border: 1px solid var(--text); */
 	}
 </style>

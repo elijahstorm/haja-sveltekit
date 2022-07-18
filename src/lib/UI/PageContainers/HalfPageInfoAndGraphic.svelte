@@ -1,26 +1,25 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-
-	import Logo from '$lib/UI/Branding/Logo.svelte';
+	import Logo from "$lib/UI/Branding/Logo.svelte"
 
 	const icons = {
-		calendar: '/icon/calendar.svg',
-		events: '/icon/events.svg',
-		girlParty: '/girl-icon/party.svg',
-		halloween: '/icon/halloween.svg',
-		heart: '/icon/heart.svg',
-		hospital: '/icon/hospital.svg',
-		toronto: '/icon/toronto.svg',
-		welcome: '/icon/welcome.svg'
-	};
-	export let icon: keyof typeof icons = 'events';
+		calendar: "/icon/calendar.svg",
+		events: "/icon/events.svg",
+		girlParty: "/girl-icon/party.svg",
+		halloween: "/icon/halloween.svg",
+		heart: "/icon/heart.svg",
+		hospital: "/icon/hospital.svg",
+		toronto: "/icon/toronto.svg",
+		welcome: "/icon/welcome.svg"
+	}
 
-	const src = icons[icon];
+	export let icon: keyof typeof icons = "events"
+
+	const src = icons[icon]
 </script>
 
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
 	<link
 		href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,500;0,700;0,900;1,500&display=swap"
 		rel="stylesheet"
@@ -30,14 +29,17 @@
 <div class="container">
 	<div class="left">
 		<div class="logo">
-			<Logo url={'/haja/logo_horizontal_black.png'} height={200} />
+			<Logo url={"/haja/logo_horizontal_white.png"} height={200} />
 		</div>
-		<img {src} alt="haja-icon" />
+		<div class="bottom-logo">
+			<img src="/icon/blob.svg" alt="white background" />
+			<img {src} alt="haja-icon" />
+		</div>
 	</div>
 
 	<div class="right">
 		<div class="logo small">
-			<Logo url={'/haja/logo_horizontal_black.png'} height={100} />
+			<Logo url={"/haja/logo_horizontal_full.png"} height={100} />
 		</div>
 		<slot />
 		<img {src} alt="haja-icon" />
@@ -82,10 +84,14 @@
 		margin: auto;
 		max-width: 400px;
 	}
-	.left > img {
+	.left > .bottom-logo {
+		position: relative;
 		margin-bottom: 2rem;
 		width: 100%;
 		height: 0;
+	}
+	.left > .bottom-logo * {
+		position: absolute;
 	}
 
 	.right {

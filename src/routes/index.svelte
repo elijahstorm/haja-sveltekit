@@ -1,19 +1,19 @@
 <script lang="ts">
-	import Casing from '$lib/UI/PageContainers/Casing.svelte';
-	import Grid from 'svelte-grid';
-	import gridHelp from 'svelte-grid/build/helper/index.mjs';
+	import Casing from "$lib/UI/PageContainers/Casing.svelte"
+	import Grid from "svelte-grid"
+	import gridHelp from "svelte-grid/build/helper/index.mjs"
 
-	const { item } = gridHelp;
+	const { item } = gridHelp
 	const imgs = [
-		'showcase/09-1.jpg',
-		'showcase/10.jpg',
-		'showcase/11-3.jpg',
-		'showcase/11-8.jpg',
-		'showcase/11-11.jpg',
-		'showcase/11-12.jpg'
-	];
-	let items = [];
-	const h = 4;
+		"showcase/09-1.jpg",
+		"showcase/10.jpg",
+		"showcase/11-3.jpg",
+		"showcase/11-8.jpg",
+		"showcase/11-11.jpg",
+		"showcase/11-12.jpg"
+	]
+	let items = []
+	const h = 4
 	for (let i in imgs) {
 		items.push({
 			id: imgs[i],
@@ -35,14 +35,14 @@
 				w: 1,
 				h: h + 3
 			})
-		});
+		})
 	}
 
 	const cols = [
 		[1100, 5],
 		[800, 3],
 		[500, 1]
-	];
+	]
 </script>
 
 <Casing backBtn={false}>

@@ -1,20 +1,20 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto } from "$app/navigation"
 
-	const firstImage = '/showcase/01-1.jpg';
-	const secondImage = '/showcase/01-2.jpg';
+	const firstImage = "/showcase/01-1.jpg"
+	const secondImage = "/showcase/01-2.jpg"
 
-	let first, second;
+	let first, second
 	const next = () => {
-		first.style.opacity = 0;
-		second.style.opacity = 1;
+		first.style.opacity = 0
+		second.style.opacity = 1
 		setTimeout(() => {
-			first.style.display = 'none';
-		}, 500);
-	};
+			first.style.display = "none"
+		}, 500)
+	}
 	const end = () => {
-		goto('/');
-	};
+		goto("/")
+	}
 </script>
 
 <div class="second" bind:this={second}>

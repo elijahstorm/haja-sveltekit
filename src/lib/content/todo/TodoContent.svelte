@@ -1,25 +1,25 @@
 <script lang="ts">
-	import type { TodoContentConfig } from './TodoContent';
-	import Icon from '@iconify/svelte';
+	import type { TodoContentConfig } from "./TodoContent"
+	import Icon from "@iconify/svelte"
 
-	export let todo: TodoContentConfig;
+	export let todo: TodoContentConfig
 
-	const img404 = '/404.png';
-	const color = todo.color;
-	const icon = todo.status == 'done' ? 'akar-icons:circle-check-fill' : 'akar-icons:circle';
+	const img404 = "/404.png"
+	const color = todo.color
+	const icon = todo.status == "done" ? "akar-icons:circle-check-fill" : "akar-icons:circle"
 	const timeStr = new Date(todo.date).toLocaleTimeString([], {
-		hour: '2-digit',
-		minute: '2-digit'
-	});
+		hour: "2-digit",
+		minute: "2-digit"
+	})
 	const dateStr = new Date(todo.date).toLocaleDateString([], {
-		weekday: 'short',
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric'
-	});
+		weekday: "short",
+		year: "numeric",
+		month: "short",
+		day: "numeric"
+	})
 </script>
 
-{#if todo.status != '[broken]'}
+{#if todo.status != "[broken]"}
 	<div class="flex">
 		<Icon {color} style="font-size: 30px;" {icon} />
 		<div class="todo">
