@@ -6,9 +6,9 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		// paths: {
-		// 	base: '/_'
-		// },
+		methodOverride: {
+			allowed: ["POST", "PUT", "DELETE"]
+		},
 		adapter: adapter({
 			hostineSite: "data",
 			fallback: "index.html"

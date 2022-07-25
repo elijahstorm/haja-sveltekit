@@ -1,13 +1,16 @@
 <script lang="ts">
-	import HalfPageInfoAndGraphic from "$lib/UI/PageContainers/HalfPageInfoAndGraphic.svelte"
+	import SmallCenterContentOverBackground from "$lib/UI/PageContainers/SmallCenterContentOverBackground.svelte"
+	import { goto } from "$app/navigation"
+	import session from "$lib/firebase/session"
+	import { onMount } from "svelte"
 
-	export function load({ params }) {
-		return {
-			props: {
-				id: params.id
-			}
+	session.subscribe(async ({ user }) => {
+		if (!user) {
+			onMount(() => {
+				goto("/login")
+			})
 		}
-	}
+	})
 </script>
 
-<HalfPageInfoAndGraphic icon={"events"}>This Todo doesn't exist! :(</HalfPageInfoAndGraphic>
+<SmallCenterContentOverBackground>Hell ya</SmallCenterContentOverBackground>

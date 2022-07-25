@@ -1,8 +1,8 @@
 <script lang="ts">
-	import InfoCard from "$lib/UI/Widgets/InfoCard.svelte"
+	import FormInfoRequestCard from "$lib/UI/Widgets/FromInfoRequestCard.svelte"
 	import SmallCenterContentOverBackground from "$lib/UI/PageContainers/SmallCenterContentOverBackground.svelte"
 </script>
 
 <SmallCenterContentOverBackground>
-	<InfoCard />
+	<FormInfoRequestCard />
 </SmallCenterContentOverBackground>

@@ -1,38 +1,74 @@
-<script lang="ts">
-	import { googleLogin } from "$lib/firebase"
-	import { onMount } from "svelte"
-
-	function loginWithGoogle() {
-		googleLogin()
-	}
-
-	let section
-	onMount(() => {
-		section.classList.remove("shrunk")
-	})
-
-	let form
-
-	function attempt() {
-		form.classList.remove("unattempted")
+<script context="module" lang="ts">
+	export async function load({ session }) {
+		if (session.user) {
+			return {
+				status: 302,
+				redirect: "/"
+			}
+		}
+		return {}
 	}
 </script>
 
-<section bind:this={section} class="shrunk">
-	<form class="content unattempted" action="/action_page.php" method="post" bind:this={form}>
+<script lang="ts">
+	import { loginWithInfo, loginWithGoogle } from "$lib/firebase/firebase"
+	import "iconify-icon"
+	import { onMount } from "svelte"
+
+	export let shadow = false
+
+	$: shrunk = true
+	$: attempted = false
+
+	onMount(() => {
+		shrunk = false
+	})
+
+	let email: string = ""
+	let password: string = ""
+	$: errorReport = null
+
+	const submit = async (e) => {
+		const { user, error } = await loginWithInfo(email, password)
+		errorReport = error
+		attempted = true
+
+		console.log(errorReport)
+	}
+
+	const google = async (e) => {
+		const { user, error } = await loginWithGoogle()
+	}
+</script>
+
+<section class:shrunk class:shadow>
+	<form class:attempted on:submit|preventDefault={submit}>
 		<div class="container">
 			<div class="header">
 				<span> Login to </span>
 
 				<img class="logo" src="/haja/logo_horizontal_full.png" alt="haja" />
 			</div>
-			<label for="uname"><b>Username</b></label>
-			<input type="text" placeholder="Enter Username" name="uname" required />
+
+			{#if errorReport}
+				<div class="error">
+					{errorReport}
+				</div>
+			{/if}
+
+			<label for="email"><b>Email</b></label>
+			<input type="email" placeholder="Email" required bind:value={email} />
 
 			<label for="psw"><b>Password</b></label>
-			<input type="password" placeholder="Enter Password" name="psw" required />
+			<input type="password" placeholder="Password" required bind:value={password} />
 
-			<button on:click={attempt}>Login</button>
+			<button type="submit">Login</button>
+
+			<div class="providers">
+				<div>
+					<iconify-icon icon="akar-icons:google-fill" width={22} />
+				</div>
+			</div>
 
 			<p class="help">
 				Help finding your
@@ -46,8 +82,10 @@
 
 <style>
 	section {
-		/* box-shadow: 0px 9px 20px 8px rgb(0 0 0 / 12%); */
 		transition: 0.6s;
+	}
+	.shadow {
+		box-shadow: 0px 9px 20px 8px rgb(0 0 0 / 12%);
 	}
 	.shrunk {
 		transform: scale(0);
@@ -56,7 +94,7 @@
 		letter-spacing: 0px;
 	}
 
-	input[type="text"],
+	input[type="email"],
 	input[type="password"] {
 		width: 100%;
 		padding: 0.5rem 1rem;
@@ -75,7 +113,7 @@
 		box-shadow: 0px 0px 2px 2px var(--primary-hl);
 		outline: none;
 	}
-	:not(.unattempted) > * > input:invalid {
+	.attempted > * > input:invalid {
 		box-shadow: 0px 0px 1px 1px var(--error);
 	}
 
@@ -101,6 +139,23 @@
 
 	.container {
 		padding: 1rem;
+	}
+
+	.error {
+		color: red;
+	}
+
+	.providers {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		gap: 2rem;
+		margin: 1rem 0;
+	}
+	.providers > * {
+		border-radius: 50%;
+		border: 1px solid #555;
+		padding: 0.5rem;
 	}
 
 	.help {
@@ -133,7 +188,7 @@
 		width: 6rem;
 	}
 
-	.content {
+	form {
 		background-color: var(--bg);
 	}
 </style>

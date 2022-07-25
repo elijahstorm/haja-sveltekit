@@ -137,6 +137,9 @@
 		font-size: 0.9rem;
 		padding: 0.5rem 0 calc(0.5rem + 2px) 0;
 	}
+	:global(section .bottom span) {
+		color: #555;
+	}
 	:global(section .bottom a) {
 		color: var(--primary);
 		text-decoration: none;

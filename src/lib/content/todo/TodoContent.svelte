@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TodoContentConfig } from "./TodoContent"
-	import Icon from "@iconify/svelte"
+	import "iconify-icon"
 
 	export let todo: TodoContentConfig
 
@@ -17,11 +17,13 @@
 		month: "short",
 		day: "numeric"
 	})
+
+	$: style = `color: ${color};`
 </script>
 
 {#if todo.status != "[broken]"}
 	<div class="flex">
-		<Icon {color} style="font-size: 30px;" {icon} />
+		<iconify-icon {style} width="30px" {icon} />
 		<div class="todo">
 			<span class="bold">{todo.title}</span>
 			<span class="date">

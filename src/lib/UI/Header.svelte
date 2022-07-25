@@ -2,15 +2,18 @@
 	import { goto } from "$app/navigation"
 	import BackButton from "$lib/UI/BackButton.svelte"
 	import Login from "$lib/UI/Login.svelte"
+
 	export let backBtn: boolean = true
-	const logo = "haja/logo_horizontal_full.png"
+	export let logoLink: string = "/"
+
+	const logo = "/haja/logo_horizontal_full.png"
 </script>
 
 <div class="flex">
 	{#if backBtn}
 		<BackButton />
 	{/if}
-	<img src={logo} alt="HAJA" on:click={() => goto("/")} />
+	<img src={logo} alt="HAJA" on:click={() => goto(logoLink)} />
 	<div class="center" />
 	<Login />
 </div>

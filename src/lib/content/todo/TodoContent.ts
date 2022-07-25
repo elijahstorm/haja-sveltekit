@@ -1,4 +1,4 @@
-import { getDocument } from "$lib/firebase"
+import { getDocument } from "$lib/firebase/firebase"
 
 export type TodoContentConfig = {
 	id: string
@@ -10,8 +10,20 @@ export type TodoContentConfig = {
 	type: string
 }
 
-export const getTodo = async ({ source, isTeam = false, id }): Promise<TodoContentConfig> => {
-	const doc = await getDocument({ source: source, isTeam: isTeam, id: id, type: "todo" })
+export const getTodo = async ({
+	source,
+	isTeam = false,
+	id
+}): Promise<TodoContentConfig | string> => {
+	let doc,
+		error: string | null = null
+
+	try {
+		doc = await getDocument({ source: source, isTeam: isTeam, id: id, type: "todo" })
+	} catch (e) {
+		error = e
+		return e
+	}
 
 	if (doc.exists()) {
 		const data = doc.data()
@@ -29,7 +41,7 @@ export const getTodo = async ({ source, isTeam = false, id }): Promise<TodoConte
 		}
 	}
 
-	return null
+	return "This todo does not exist!"
 }
 
 declare module "../Content" {

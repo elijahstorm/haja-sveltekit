@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Casing from "$lib/UI/PageContainers/Casing.svelte"
-	import Grid from "svelte-grid"
-	import gridHelp from "svelte-grid/build/helper/index.mjs"
+	import Grid from "$lib/UI/Widgets/Grid.svelte"
+	import Modal from "$lib/UI/Widgets/Modal.svelte"
 
-	const { item } = gridHelp
 	const imgs = [
 		"showcase/09-1.jpg",
 		"showcase/10.jpg",
@@ -12,46 +11,20 @@
 		"showcase/11-11.jpg",
 		"showcase/11-12.jpg"
 	]
-	let items = []
-	const h = 4
-	for (let i in imgs) {
-		items.push({
-			id: imgs[i],
-			5: item({
-				x: parseInt(i) % 5,
-				y: Math.floor(parseInt(i) / 5) * h,
-				w: 1,
-				h: h
-			}),
-			3: item({
-				x: parseInt(i) % 3,
-				y: Math.floor(parseInt(i) / 3) * h,
-				w: 1,
-				h: h
-			}),
-			1: item({
-				x: 0,
-				y: Math.floor(parseInt(i)) * (h + 3),
-				w: 1,
-				h: h + 3
-			})
-		})
-	}
 
-	const cols = [
-		[1100, 5],
-		[800, 3],
-		[500, 1]
-	]
+	const cols = 3
+	const gap = "2rem 1rem"
 </script>
 
-<Casing backBtn={false}>
+<Casing logoLink={"/demo"} backBtn={false}>
 	<div>
 		<a href="https://haja-project.web.app/">Let's Do Together -- Today!</a>
 	</div>
-	<div class="size">
-		<Grid bind:items rowHeight={100} let:item {cols} let:index>
-			<img src={imgs[index]} alt="showcase image {imgs[index]}" />
+	<div>
+		<Grid {cols} {gap} items={imgs} let:item let:index>
+			<Modal caption={item}>
+				<img src={item} alt="showcase image {index}" />
+			</Modal>
 		</Grid>
 	</div>
 </Casing>
@@ -59,6 +32,8 @@
 <style>
 	div {
 		text-align: center;
+		margin: 1rem 0;
+		padding: 0.5rem 0;
 	}
 	a {
 		font-size: 30px;
@@ -72,9 +47,5 @@
 	}
 	a:hover {
 		text-decoration: underline;
-	}
-	.size {
-		max-width: 1100px;
-		width: 100%;
 	}
 </style>

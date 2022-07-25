@@ -1,26 +1,37 @@
 <script lang="ts">
 	import { goto } from "$app/navigation"
+	import { signOut } from "$lib/firebase/firebase"
+	import session from "$lib/firebase/session"
+	import type { UserInfo } from "firebase/auth"
+	import "iconify-icon"
 
-	import { signOut } from "$lib/firebase"
-	import Icon from "@iconify/svelte"
-
-	function login() {
-		goto("login")
+	const login = () => {
+		goto("/login")
 	}
 
-	let user
+	const myHome = () => {
+		goto("/me")
+	}
+
+	let loggedIn: UserInfo
+	session.subscribe(async ({ user }) => {
+		loggedIn = user
+	})
 </script>
 
 <section>
-	{#if user}
+	{#if loggedIn}
+		<div on:click={myHome} class="profile">
+			<img src={loggedIn.photoURL} alt="user profile" />
+		</div>
 		<div on:click={() => signOut()} class="button color primary">
 			<span>Logout</span>
-			<Icon icon={"fe:logout"} width={22} />
+			<iconify-icon icon={"fe:logout"} width={22} />
 		</div>
 	{:else}
 		<div on:click={login} class="button color primary">
 			<span>Login</span>
-			<Icon icon={"akar-icons:google-fill"} width={22} />
+			<iconify-icon icon={"akar-icons:google-fill"} width={22} />
 		</div>
 	{/if}
 </section>
@@ -28,14 +39,30 @@
 <style>
 	section {
 		margin: auto;
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
 	}
 	section > div {
 		display: flex;
+		height: max-content;
+	}
+	.profile {
+		border-radius: 50%;
+		border: 1px var(--text) solid;
+		overflow: hidden;
+		align-self: center;
+		cursor: pointer;
+	}
+	img {
+		height: 2rem;
 	}
 	span {
 		padding-right: calc(var(--default-padding) / 2);
-		margin: auto;
 		padding-top: 2px;
+	}
+	section > div > * {
+		align-self: center;
 	}
 	.button {
 		border: 1px var(--text) solid;

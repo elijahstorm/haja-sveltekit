@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Header from "$lib/UI/Header.svelte"
 	export let backBtn: boolean = true
+	export let logoLink: string = null
 </script>
 
 <svelte:head>
@@ -12,18 +13,26 @@
 	/>
 </svelte:head>
 
-<div class="container">
-	<Header {backBtn} />
-	<div class="padding-bottom" />
-	<slot />
-</div>
+<section>
+	<div class="container">
+		<Header {backBtn} {logoLink} />
+		<div class="padding-bottom" />
+		<slot />
+	</div>
+</section>
 
 <style>
 	:global(body) {
 		font-family: Roboto;
 	}
 
+	section {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
 	.container {
+		width: 100%;
 		max-width: 900px;
 		padding: 64px 184px;
 	}
