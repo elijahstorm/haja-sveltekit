@@ -1,11 +1,17 @@
 import { initializeApp } from "firebase/app"
 // import { getAnalytics } from 'firebase/analytics';
 import {
+	createUserWithEmailAndPassword,
+	FacebookAuthProvider,
 	getAuth,
 	GoogleAuthProvider,
 	onAuthStateChanged,
+	sendEmailVerification,
+	sendPasswordResetEmail,
+	signInWithCustomToken,
 	signInWithEmailAndPassword,
 	signInWithPopup,
+	updatePassword,
 	type UserCredential
 } from "firebase/auth"
 import { doc, getDoc, getFirestore } from "firebase/firestore"
@@ -48,9 +54,30 @@ export const loginWithGoogle = async () => {
 		signInWithPopup(auth, new GoogleAuthProvider())
 	})
 }
+export const loginWithFacebook = async () => {
+	return loginPipe(() => {
+		signInWithPopup(auth, new FacebookAuthProvider())
+	})
+}
 export const loginWithInfo = async (email: string, password: string) => {
 	return loginPipe(() => {
 		signInWithEmailAndPassword(auth, email, password)
+	})
+}
+export const newUser = async (email: string, password: string) => {
+	return loginPipe(async () => {
+		await createUserWithEmailAndPassword(auth, email, password)
+		sendEmailVerification(auth.currentUser)
+	})
+}
+export const changePassword = async (password: string, requestLink?: string) => {
+	return loginPipe(async () => {
+		await updatePassword(auth.currentUser, password)
+	})
+}
+export const lostPassword = async (email: string) => {
+	return loginPipe(async () => {
+		await sendPasswordResetEmail(auth, email)
 	})
 }
 

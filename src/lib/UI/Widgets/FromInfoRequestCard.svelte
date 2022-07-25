@@ -3,8 +3,7 @@
 
 	export let inputs = [
 		{
-			text: "Email address",
-			name: "email",
+			text: "Email",
 			id: "email_reset",
 			type: "email",
 			icon: "/icon/person.svg"
@@ -37,16 +36,16 @@
 
 		for (let index in inputs) {
 			const input = inputs[index]
-			const value = formElement[input.name].value
+			const value = formElement[input.id].value
 			console.log(input, value)
 
-			if (input.name == "password") {
+			if (input.type == "password") {
 				password = value
 
 				if (value.length < 8) {
 					return `Please enter a valid ${input.type}.`
 				}
-			} else if (input.name == "pass_confirm" && value != password) {
+			} else if (input.id == "pass_confirm" && value != password) {
 				return `Passwords don't match`
 			}
 		}
@@ -78,7 +77,7 @@
 				{#each inputs as input}
 					<DataInput
 						text={input.text}
-						name={input.name}
+						name={input.id}
 						id={input.id}
 						type={input.type}
 						icon={input.icon}

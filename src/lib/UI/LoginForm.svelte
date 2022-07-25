@@ -1,17 +1,6 @@
-<script context="module" lang="ts">
-	export async function load({ session }) {
-		if (session.user) {
-			return {
-				status: 302,
-				redirect: "/"
-			}
-		}
-		return {}
-	}
-</script>
-
 <script lang="ts">
-	import { loginWithInfo, loginWithGoogle } from "$lib/firebase/firebase"
+	import { loginWithInfo, loginWithGoogle, loginWithFacebook } from "$lib/firebase/firebase"
+	import { fade, scale } from "svelte/transition"
 	import "iconify-icon"
 	import { onMount } from "svelte"
 
@@ -32,12 +21,16 @@
 		const { user, error } = await loginWithInfo(email, password)
 		errorReport = error
 		attempted = true
-
-		console.log(errorReport)
 	}
 
 	const google = async (e) => {
 		const { user, error } = await loginWithGoogle()
+		errorReport = error
+	}
+	const facebook = async (e) => {
+		const { user, error } = await loginWithFacebook()
+		errorReport = error
+		errorReport = "facebook not started"
 	}
 </script>
 
@@ -51,9 +44,11 @@
 			</div>
 
 			{#if errorReport}
-				<div class="error">
+				<div class="error" in:fade>
 					{errorReport}
 				</div>
+			{:else}
+				<div class="error">&nbsp;</div>
 			{/if}
 
 			<label for="email"><b>Email</b></label>
@@ -65,8 +60,11 @@
 			<button type="submit">Login</button>
 
 			<div class="providers">
-				<div>
-					<iconify-icon icon="akar-icons:google-fill" width={22} />
+				<div on:click={google}>
+					<iconify-icon icon="akar-icons:google-fill" />
+				</div>
+				<div on:click={facebook}>
+					<iconify-icon icon="akar-icons:facebook-fill" />
 				</div>
 			</div>
 
@@ -105,7 +103,6 @@
 		box-sizing: border-box;
 		border-radius: 3rem;
 		transition: 0.3s;
-		/* box-shadow: 0px 0px 1px 1px #0000004a; */
 		background-color: #00000013;
 	}
 	input:focus {
@@ -121,7 +118,7 @@
 		background-color: var(--primary);
 		color: white;
 		padding: 0.8rem 20px;
-		margin: 34px 0 12px 0;
+		margin: 2rem 0 0.5rem 0;
 		text-transform: uppercase;
 		font-weight: bold;
 		line-height: 1.5rem;
@@ -143,6 +140,7 @@
 
 	.error {
 		color: red;
+		margin: 1rem 0;
 	}
 
 	.providers {
@@ -150,12 +148,19 @@
 		flex-direction: row;
 		justify-content: center;
 		gap: 2rem;
-		margin: 1rem 0;
+		margin: 1rem 0 2rem 0;
 	}
 	.providers > * {
 		border-radius: 50%;
+		width: 1.5rem;
+		height: 1.5rem;
 		border: 1px solid #555;
 		padding: 0.5rem;
+		cursor: pointer;
+		display: block;
+	}
+	iconify-icon {
+		font-size: 1.5rem;
 	}
 
 	.help {
@@ -174,7 +179,7 @@
 	}
 
 	.header {
-		margin: 1rem 0 3rem 0;
+		margin: 1rem 0 2rem 0;
 		font-size: 20px;
 		display: flex;
 		flex-direction: row;

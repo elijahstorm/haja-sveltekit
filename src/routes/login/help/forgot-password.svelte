@@ -1,8 +1,53 @@
 <script lang="ts">
 	import FormInfoRequestCard from "$lib/UI/Widgets/FromInfoRequestCard.svelte"
 	import SmallCenterContentOverBackground from "$lib/UI/PageContainers/SmallCenterContentOverBackground.svelte"
+	import { lostPassword } from "$lib/firebase/firebase"
+	import InfoCard from "$lib/UI/Widgets/InfoCard.svelte"
+	import { goto } from "$app/navigation"
+	import session from "$lib/firebase/session"
+
+	const callback = async (form) => {
+		formSent = lostPassword(form["email"].value)
+		started = true
+	}
+
+	let formSent
+	$: started = false
+
+	session.subscribe(async ({ user }) => {
+		if (user) {
+			goto("/me")
+		}
+	})
 </script>
 
 <SmallCenterContentOverBackground>
-	<FormInfoRequestCard />
+	{#if started}
+		<InfoCard>
+			{#await formSent}
+				Sending....
+			{:then response}
+				{#if response.error}
+					{response.error}
+				{:else}
+					A password change email was sent
+				{/if}
+			{/await}
+		</InfoCard>
+	{:else}
+		<FormInfoRequestCard
+			{callback}
+			inputs={[
+				{
+					text: "Email",
+					id: "email",
+					type: "email",
+					icon: "/icon/person.svg"
+				}
+			]}
+		>
+			<div slot="title">Lost Email</div>
+			<div slot="button">Request email</div>
+		</FormInfoRequestCard>
+	{/if}
 </SmallCenterContentOverBackground>

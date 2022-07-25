@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from "$app/navigation"
-
 	import session from "$lib/firebase/session"
 
 	import LoginForm from "$lib/UI/LoginForm.svelte"
@@ -8,7 +7,7 @@
 
 	session.subscribe(async ({ user }) => {
 		if (user) {
-			goto("/")
+			goto("/me")
 		}
 	})
 </script>
