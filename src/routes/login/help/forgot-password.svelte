@@ -5,6 +5,7 @@
 	import InfoCard from "$lib/UI/Widgets/InfoCard.svelte"
 	import { goto } from "$app/navigation"
 	import session from "$lib/firebase/session"
+	import { browser } from "$app/env"
 
 	const callback = async (form) => {
 		formSent = lostPassword(form["email"].value)
@@ -14,9 +15,9 @@
 	let formSent
 	$: started = false
 
-	session.subscribe(async ({ user }) => {
-		if (user) {
-			goto("/me")
+	session.subscribe(async ({ user, ready }) => {
+		if (user && ready) {
+			if (browser) goto("/me")
 		}
 	})
 </script>

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { browser } from "$app/env"
+
 	import { goto } from "$app/navigation"
 
 	const firstImage = "/showcase/01-1.jpg"
@@ -13,7 +15,7 @@
 		}, 500)
 	}
 	const end = () => {
-		goto("/")
+		if (browser) goto("/")
 	}
 </script>
 

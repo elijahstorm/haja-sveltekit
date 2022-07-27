@@ -3,8 +3,10 @@ import type { UserInfo } from "firebase/auth"
 
 const session = writable<{
 	user?: UserInfo
+	ready: boolean
 }>({
-	user: null
+	user: null,
+	ready: false
 })
 
 export default {

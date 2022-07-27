@@ -1,5 +1,23 @@
 import { initializeApp } from "firebase/app"
-// import { getAnalytics } from 'firebase/analytics';
+// import { getAnalytics, isSupported } from "firebase/analytics"
+import {
+	addDoc,
+	collection,
+	doc,
+	DocumentReference,
+	DocumentSnapshot,
+	getDoc,
+	getDocs,
+	getFirestore,
+	limit,
+	query,
+	QuerySnapshot,
+	serverTimestamp,
+	setDoc,
+	where,
+	type DocumentData,
+	type WhereFilterOp
+} from "firebase/firestore"
 import {
 	createUserWithEmailAndPassword,
 	FacebookAuthProvider,
@@ -8,28 +26,29 @@ import {
 	onAuthStateChanged,
 	sendEmailVerification,
 	sendPasswordResetEmail,
-	signInWithCustomToken,
 	signInWithEmailAndPassword,
 	signInWithPopup,
 	updatePassword,
 	type UserCredential
 } from "firebase/auth"
-import { doc, getDoc, getFirestore } from "firebase/firestore"
 import session from "./session"
+import type { AllContentTypes, ContentConfig } from "$lib/content/Content"
 
 const firebaseConfig = {
-	apiKey: "AIzaSyBekHlkqR5KwKLl0vH_5CpwnkradmOt91Y",
-	authDomain: "haja-project.firebaseapp.com",
-	databaseURL: "https://haja-project-default-rtdb.firebaseio.com",
-	projectId: "haja-project",
-	storageBucket: "haja-project.appspot.com",
-	messagingSenderId: "965643333791",
-	appId: "1:965643333791:web:a799189abe33aa2c9972aa",
-	measurementId: "G-N04NR104NT"
+	apiKey: import.meta.env.VITE_API_KEY,
+	authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+	databaseURL: import.meta.env.VITE_DATABASE_URL,
+	projectId: import.meta.env.VITE_PROJECT_ID,
+	storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+	messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+	appId: import.meta.env.VITE_APP_ID,
+	measurementId: import.meta.env.VITE_MEASUREMENT_ID
 }
 
 const app = initializeApp(firebaseConfig)
-// const analytics = getAnalytics(app);
+
+const db = getFirestore(app)
+// const analytics = isSupported().then((yes) => (yes ? getAnalytics(app) : null))
 
 const auth = getAuth()
 
@@ -49,6 +68,25 @@ const loginPipe = async (pipe) => {
 	}
 }
 
+export const awaitMyId: () => Promise<string> = () => {
+	return new Promise<string>((resolveOuter) => {
+		const existing = myId()
+
+		if (existing != null) {
+			resolveOuter(existing)
+			return
+		}
+
+		session.subscribe(async ({ user, ready }) => {
+			if (!ready) return
+
+			resolveOuter(user?.uid ?? "")
+		})
+	})
+}
+export const myId = (): string | null => {
+	return auth.currentUser?.uid
+}
 export const loginWithGoogle = async () => {
 	return loginPipe(() => {
 		signInWithPopup(auth, new GoogleAuthProvider())
@@ -85,14 +123,120 @@ export const signOut = () => {
 	auth.signOut()
 }
 
-const db = getFirestore(app)
-
-export const getDocument = async ({ source, isTeam = false, type, id }) => {
-	return await getDoc(doc(db, `${isTeam ? "teams" : "users"}/${source}/${type}/${id}`))
-}
-
 onAuthStateChanged(auth, (user) => {
 	session.set({
-		user
+		user,
+		ready: true
 	})
 })
+
+const requestLimit = 50,
+	requestTimeout = 36000000 // 10 minutes in milliseconds
+
+export const getDocument: (data: {
+	id: string
+	source?: string
+	isTeam?: boolean
+	type?: string
+}) => Promise<DocumentSnapshot<DocumentData>> = ({
+	source = null,
+	isTeam = false,
+	type = null,
+	id
+}) => {
+	let api = isTeam ? "teams" : "users"
+
+	if (source != null && type != null && id != null) {
+		api += `/${source}/${type}`
+	}
+
+	api += `/${id}`
+
+	return getDoc(doc(db, api))
+}
+
+export const uploadDocument: (data: {
+	content: AllContentTypes
+	source?: string
+	type?: string
+	isTeam?: boolean
+	timestamp?: string
+}) => Promise<DocumentReference<DocumentData>> = ({
+	content,
+	source = null,
+	type = null,
+	isTeam = false,
+	timestamp = "date"
+}) => {
+	let api = isTeam ? "teams" : "users"
+
+	if (source != null && type != null) {
+		api += `/${source}/${type}`
+	}
+
+	delete content.id
+	delete content.contentType
+	content[timestamp] = serverTimestamp()
+
+	return addDoc(collection(db, api), content)
+}
+
+export const updateDocument: (data: {
+	id: string
+	content: AllContentTypes
+	source?: string
+	type?: string
+	isTeam?: boolean
+	timestamp?: string
+}) => Promise<void> = ({
+	id,
+	content,
+	source = null,
+	type = null,
+	isTeam = false,
+	timestamp = "date"
+}) => {
+	let api = isTeam ? "teams" : "users"
+
+	if (source != null && type != null) {
+		api += `/${source}/${type}`
+	}
+
+	api += `/${id}`
+
+	delete content.id
+	delete content.contentType
+	content[timestamp] = serverTimestamp()
+
+	return setDoc(doc(db, api), content, { merge: true })
+}
+
+export const storeQuery: (data: {
+	source?: string
+	isTeam?: boolean
+	type?: string
+	amount?: number
+	queries: {
+		type: string
+		compare: WhereFilterOp
+		value: any
+	}[]
+}) => Promise<QuerySnapshot<DocumentData>> = ({
+	source = null,
+	isTeam = false,
+	type = null,
+	amount = 50,
+	queries
+}) => {
+	const queryList = queries.map((query) => {
+		return where(query.type, query.compare, query.value)
+	})
+
+	let api = isTeam ? "teams" : "users"
+
+	if (source != null && type != null) {
+		api += `/${source}/${type}`
+	}
+
+	return getDocs(query(collection(db, api), ...queryList, limit(amount)))
+}

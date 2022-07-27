@@ -4,6 +4,7 @@
 	import session from "$lib/firebase/session"
 	import { goto } from "$app/navigation"
 	import { updatePassword } from "firebase/auth"
+	import { browser } from "$app/env"
 
 	export let validation: string
 	export let error: string
@@ -22,11 +23,11 @@
 	$: success = false
 	$: loggedIn = false
 
-	session.subscribe(async ({ user }) => {
-		loggedIn = user ? true : false
+	session.subscribe(async ({ user, ready }) => {
+		loggedIn = user && ready ? true : false
 
 		if (!loggedIn && requestLink === "") {
-			goto("/login")
+			if (browser) goto("/login")
 		}
 	})
 </script>

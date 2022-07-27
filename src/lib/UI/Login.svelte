@@ -1,29 +1,25 @@
 <script lang="ts">
+	import { browser } from "$app/env"
 	import { goto } from "$app/navigation"
+	import UserIcon from "$lib/content/user/UserIcon.svelte"
 	import { signOut } from "$lib/firebase/firebase"
 	import session from "$lib/firebase/session"
 	import type { UserInfo } from "firebase/auth"
 	import "iconify-icon"
 
 	const login = () => {
-		goto("/login")
-	}
-
-	const myHome = () => {
-		goto("/me")
+		if (browser) goto("/login")
 	}
 
 	let loggedIn: UserInfo
-	session.subscribe(async ({ user }) => {
+	session.subscribe(async ({ user, ready }) => {
 		loggedIn = user
 	})
 </script>
 
 <section>
 	{#if loggedIn}
-		<div on:click={myHome} class="profile">
-			<img src={loggedIn.photoURL} alt="user profile" />
-		</div>
+		<UserIcon />
 		<div on:click={() => signOut()} class="button color primary">
 			<span>Logout</span>
 			<iconify-icon icon={"fe:logout"} width={22} />
@@ -47,16 +43,6 @@
 		display: flex;
 		height: max-content;
 	}
-	.profile {
-		border-radius: 50%;
-		border: 1px var(--text) solid;
-		overflow: hidden;
-		align-self: center;
-		cursor: pointer;
-	}
-	img {
-		height: 2rem;
-	}
 	span {
 		padding-right: calc(var(--default-padding) / 2);
 		padding-top: 2px;
@@ -65,7 +51,7 @@
 		align-self: center;
 	}
 	.button {
-		border: 1px var(--text) solid;
+		border: 1px #555 solid;
 		border-radius: var(--small-radius);
 	}
 </style>

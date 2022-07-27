@@ -3,11 +3,13 @@ import { getTodo } from "$lib/content/todo/TodoContent"
 /** @type {import('./[id]').RequestHandler} */
 export async function GET({ params }) {
 	let error: string | null = null
+	const { id, source } = params
+	const isTeam = params.isTeam === "1"
 
 	let todo = await getTodo({
-		source: params.source,
-		isTeam: params.isTeam === "1",
-		id: params.id
+		source,
+		isTeam,
+		id
 	})
 
 	if (typeof todo === "string") {
@@ -16,6 +18,6 @@ export async function GET({ params }) {
 	}
 
 	return {
-		body: { todo, error }
+		body: { todo, error, source, isTeam }
 	}
 }

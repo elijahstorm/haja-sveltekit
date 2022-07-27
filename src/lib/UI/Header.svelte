@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from "$app/navigation"
 	import BackButton from "$lib/UI/BackButton.svelte"
 	import Login from "$lib/UI/Login.svelte"
 
@@ -13,19 +12,21 @@
 	{#if backBtn}
 		<BackButton />
 	{/if}
-	<img src={logo} alt="HAJA" on:click={() => goto(logoLink)} />
+	<a href={logoLink}>
+		<img src={logo} alt="HAJA" />
+	</a>
 	<div class="center" />
 	<Login />
 </div>
 
 <style>
-	img {
-		max-width: 120px;
-		cursor: pointer;
-	}
 	.flex {
 		display: flex;
 		flex-direction: horizontal;
+	}
+	img {
+		max-width: 120px;
+		cursor: pointer;
 	}
 	.center {
 		flex: 1;

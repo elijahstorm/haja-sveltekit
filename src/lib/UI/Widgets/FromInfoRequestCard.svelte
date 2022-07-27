@@ -11,7 +11,7 @@
 	]
 
 	export let error: string = ""
-	export let callback: (form: any) => void = (form) => {}
+	export let callback: (form) => void = (form) => {}
 
 	let formElement
 
@@ -37,7 +37,6 @@
 		for (let index in inputs) {
 			const input = inputs[index]
 			const value = formElement[input.id].value
-			console.log(input, value)
 
 			if (input.type == "password") {
 				password = value

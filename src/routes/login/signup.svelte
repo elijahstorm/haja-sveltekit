@@ -4,14 +4,15 @@
 	import { newUser } from "$lib/firebase/firebase"
 	import session from "$lib/firebase/session"
 	import { goto } from "$app/navigation"
+	import { browser } from "$app/env"
 
 	const callback = (form) => {
 		newUser(form["email"], form["password"])
 	}
 
-	session.subscribe(async ({ user }) => {
-		if (user) {
-			goto("/me")
+	session.subscribe(async ({ user, ready }) => {
+		if (user && ready) {
+			if (browser) goto("/me")
 		}
 	})
 </script>

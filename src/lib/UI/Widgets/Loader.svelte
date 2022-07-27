@@ -4,9 +4,25 @@
 
 <script lang="ts">
 	export let loadingStyle: LoadingStyle = "circle"
+	export let size: number = 3
+	export let left: number = 0
+	export let top: number = 0
+	export let right: number = 0
+	export let bototm: number = 0
+
+	let adjustedSize = loadingStyle == "dots" ? "10px" : `${size - 0.9}rem`
+
+	const style = `
+		width: ${adjustedSize};
+		height: ${adjustedSize};
+		left: ${left}rem;
+		top: ${top}rem;
+		right: ${right}rem;
+		bototm: ${bototm}rem;
+	`
 </script>
 
-<div class={loadingStyle} />
+<div class={loadingStyle} {style} />
 
 <style>
 	div {
