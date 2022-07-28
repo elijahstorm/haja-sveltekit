@@ -6,4 +6,4 @@
 	export let error: string | null
 </script>
 
-<ContentContainer bind:content={user} {error} isTeam={false} />
+<ContentContainer bind:content={user} source={""} {error} isTeam={false} />

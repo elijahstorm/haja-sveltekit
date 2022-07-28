@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { loginWithInfo, loginWithGoogle, loginWithFacebook } from "$lib/firebase/firebase"
-	import { fade, scale } from "svelte/transition"
-	import "iconify-icon"
+	import { fade } from "svelte/transition"
 	import { onMount } from "svelte"
+	import "iconify-icon"
 
 	export let shadow = false
 
