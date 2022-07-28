@@ -6,8 +6,8 @@
 	import { updatePassword } from "firebase/auth"
 	import { browser } from "$app/env"
 
-	export let validation: string
-	export let error: string
+	// export let validation: string
+	// export let error: string
 	export let requestLink: string
 
 	const callback = async (form) => {
