@@ -1,5 +1,5 @@
 <script lang="ts">
-	import "iconify-icon"
+	import Icon from "@iconify/svelte"
 
 	export let icon: string = "typcn:edit"
 	export let width: string = "20px"
@@ -7,7 +7,7 @@
 </script>
 
 <button on:click={callback}>
-	<iconify-icon {icon} {width} />
+	<Icon {icon} {width} />
 </button>
 
 <style>

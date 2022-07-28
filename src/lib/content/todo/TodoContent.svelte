@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TodoContentConfig } from "./TodoContent"
-	import "iconify-icon"
+	import Icon from "@iconify/svelte"
 	import { updateDocument } from "$lib/firebase/firebase"
 
 	export let todo: TodoContentConfig
@@ -41,7 +41,9 @@
 
 {#if status != "[broken]"}
 	<div class="flex">
-		<iconify-icon {style} width="30px" {icon} on:click|preventDefault={toggleDone} />
+		<div class="icon" on:click|preventDefault={toggleDone}>
+			<Icon {style} width={30} {icon} />
+		</div>
 		<div class="todo">
 			<span class="bold">{todo.title}</span>
 			<span class="date">
@@ -68,7 +70,7 @@
 	.date {
 		opacity: 0.6;
 	}
-	iconify-icon {
+	.icon {
 		cursor: pointer;
 	}
 </style>

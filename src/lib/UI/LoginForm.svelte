@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { loginWithInfo, loginWithGoogle, loginWithFacebook } from "$lib/firebase/firebase"
-	import { fade, scale } from "svelte/transition"
-	import "iconify-icon"
 	import { onMount } from "svelte"
+	import { loginWithInfo, loginWithGoogle, loginWithFacebook } from "$lib/firebase/firebase"
+	import { fade } from "svelte/transition"
+	import Icon from "@iconify/svelte"
 
 	export let shadow = false
 
@@ -61,10 +61,10 @@
 
 			<div class="providers">
 				<div on:click={google}>
-					<iconify-icon icon="akar-icons:google-fill" />
+					<Icon icon="akar-icons:google-fill" />
 				</div>
 				<div on:click={facebook}>
-					<iconify-icon icon="akar-icons:facebook-fill" />
+					<Icon icon="akar-icons:facebook-fill" />
 				</div>
 			</div>
 

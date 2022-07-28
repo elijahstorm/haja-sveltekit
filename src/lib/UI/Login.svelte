@@ -5,7 +5,7 @@
 	import { signOut } from "$lib/firebase/firebase"
 	import session from "$lib/firebase/session"
 	import type { UserInfo } from "firebase/auth"
-	import "iconify-icon"
+	import Icon from "@iconify/svelte"
 
 	const login = () => {
 		if (browser) goto("/login")
@@ -22,12 +22,12 @@
 		<UserIcon />
 		<div on:click={() => signOut()} class="button color primary">
 			<span>Logout</span>
-			<iconify-icon icon={"fe:logout"} width={22} />
+			<Icon icon={"fe:logout"} width={22} />
 		</div>
 	{:else}
 		<div on:click={login} class="button color primary">
 			<span>Login</span>
-			<iconify-icon icon={"akar-icons:google-fill"} width={22} />
+			<Icon icon={"akar-icons:google-fill"} width={22} />
 		</div>
 	{/if}
 </section>

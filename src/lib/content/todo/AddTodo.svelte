@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { TodoColor, TodoContentConfig } from "./TodoContent"
 	import { myId, uploadDocument } from "$lib/firebase/firebase"
-	import "iconify-icon"
+	import Icon from "@iconify/svelte"
 
 	export let source: string = myId()
 	export let isTeam: boolean = false
@@ -47,7 +47,7 @@
 </script>
 
 <div class="flex" class:editing on:click={add}>
-	<iconify-icon {icon} {style} width={editing ? "30px" : "32px"} />
+	<Icon {icon} {style} width={editing ? 30 : 32} />
 	{#if editing}
 		<input
 			bind:this={input}
