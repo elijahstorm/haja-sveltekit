@@ -35,14 +35,14 @@ import session from "./session"
 import type { AllContentTypes, ContentConfig } from "$lib/content/Content"
 
 const firebaseConfig = {
-	apiKey: import.meta.env.VITE_API_KEY,
-	authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-	databaseURL: import.meta.env.VITE_DATABASE_URL,
-	projectId: import.meta.env.VITE_PROJECT_ID,
-	storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-	messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-	appId: import.meta.env.VITE_APP_ID,
-	measurementId: import.meta.env.VITE_MEASUREMENT_ID
+	apiKey: "AIzaSyBekHlkqR5KwKLl0vH_5CpwnkradmOt91Y",
+	authDomain: "haja-project.firebaseapp.com",
+	databaseURL: "https://haja-project-default-rtdb.firebaseio.com",
+	projectId: "haja-project",
+	storageBucket: "haja-project.appspot.com",
+	messagingSenderId: "965643333791",
+	appId: "1:965643333791:web:a799189abe33aa2c9972aa",
+	measurementId: "G-N04NR104NT"
 }
 
 const app = initializeApp(firebaseConfig)
