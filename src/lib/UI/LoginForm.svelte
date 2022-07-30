@@ -18,17 +18,17 @@
 	$: errorReport = null
 
 	const submit = async (e) => {
-		const { user, error } = await loginWithInfo(email, password)
+		const { error } = await loginWithInfo(email, password)
 		errorReport = error
 		attempted = true
 	}
 
 	const google = async (e) => {
-		const { user, error } = await loginWithGoogle()
+		const { error } = await loginWithGoogle()
 		errorReport = error
 	}
 	const facebook = async (e) => {
-		const { user, error } = await loginWithFacebook()
+		const { error } = await loginWithFacebook()
 		errorReport = error
 		errorReport = "facebook not started"
 	}
@@ -60,10 +60,10 @@
 			<button type="submit">Login</button>
 
 			<div class="providers">
-				<div on:click={google}>
-					<Icon icon="akar-icons:google-fill" />
+				<div class="icon" on:click={google}>
+					<Icon icon="akar-icons:google-fill" width />
 				</div>
-				<div on:click={facebook}>
+				<div class="icon" on:click={facebook}>
 					<Icon icon="akar-icons:facebook-fill" />
 				</div>
 			</div>
@@ -159,7 +159,7 @@
 		cursor: pointer;
 		display: block;
 	}
-	iconify-icon {
+	.icon {
 		font-size: 1.5rem;
 	}
 

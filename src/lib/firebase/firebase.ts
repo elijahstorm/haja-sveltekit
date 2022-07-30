@@ -32,7 +32,8 @@ import {
 	type UserCredential
 } from "firebase/auth"
 import session from "./session"
-import type { AllContentTypes, ContentConfig } from "$lib/content/Content"
+import type { AllContentTypes } from "$lib/content/Content"
+import { ErrorMessaging } from "./errors"
 
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_API_KEY,
@@ -52,20 +53,18 @@ const db = getFirestore(app)
 
 const auth = getAuth()
 
-const loginPipe = async (pipe) => {
-	let error: string, user: UserCredential
-
-	try {
-		user = await pipe()
-		getAuth()
-	} catch (e) {
-		error = e
-	}
-
-	return {
-		user,
-		error
-	}
+const loginPipe: (pipe: () => Promise<void>) => Promise<{ error?: string }> = async (pipe) => {
+	return await new Promise((resolve) => {
+		pipe()
+			.then(() => {
+				resolve({})
+			})
+			.catch((e) => {
+				resolve({
+					error: ErrorMessaging(e.code)
+				})
+			})
+	})
 }
 
 export const awaitMyId: () => Promise<string> = () => {
@@ -87,33 +86,33 @@ export const awaitMyId: () => Promise<string> = () => {
 export const myId = (): string | null => {
 	return auth.currentUser?.uid
 }
-export const loginWithGoogle = async () => {
-	return loginPipe(() => {
-		signInWithPopup(auth, new GoogleAuthProvider())
+export const loginWithGoogle = () => {
+	return loginPipe(async () => {
+		await signInWithPopup(auth, new GoogleAuthProvider())
 	})
 }
-export const loginWithFacebook = async () => {
-	return loginPipe(() => {
-		signInWithPopup(auth, new FacebookAuthProvider())
+export const loginWithFacebook = () => {
+	return loginPipe(async () => {
+		await signInWithPopup(auth, new FacebookAuthProvider())
 	})
 }
-export const loginWithInfo = async (email: string, password: string) => {
-	return loginPipe(() => {
-		signInWithEmailAndPassword(auth, email, password)
+export const loginWithInfo = (email: string, password: string) => {
+	return loginPipe(async () => {
+		await signInWithEmailAndPassword(auth, email, password)
 	})
 }
-export const newUser = async (email: string, password: string) => {
+export const newUser = (email: string, password: string) => {
 	return loginPipe(async () => {
 		await createUserWithEmailAndPassword(auth, email, password)
-		sendEmailVerification(auth.currentUser)
+		await sendEmailVerification(auth.currentUser)
 	})
 }
-export const changePassword = async (password: string, requestLink?: string) => {
+export const changePassword = (password: string, requestLink?: string) => {
 	return loginPipe(async () => {
 		await updatePassword(auth.currentUser, password)
 	})
 }
-export const lostPassword = async (email: string) => {
+export const lostPassword = (email: string) => {
 	return loginPipe(async () => {
 		await sendPasswordResetEmail(auth, email)
 	})

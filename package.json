@@ -20,21 +20,21 @@
 	"devDependencies": {
 		"@iconify/svelte": "^2.2.1",
 		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/adapter-node": "^1.0.0-next.71",
+		"@sveltejs/adapter-node": "^1.0.0-next.85",
 		"@sveltejs/kit": "next",
-		"prettier": "^2.5.1",
-		"prettier-plugin-svelte": "^2.5.0",
-		"svelte": "^3.44.0",
-		"svelte-adapter-firebase": "^0.13.1",
-		"svelte-check": "^2.2.6",
-		"svelte-preprocess": "^4.10.1",
-		"tslib": "^2.3.1",
-		"typescript": "~4.6.2",
-		"vite": "^3.0.3"
+		"prettier": "^2.7.1",
+		"prettier-plugin-svelte": "^2.7.0",
+		"svelte": "^3.49.0",
+		"svelte-adapter-firebase": "^0.14.1",
+		"svelte-check": "^2.8.0",
+		"svelte-preprocess": "^4.10.7",
+		"tslib": "^2.4.0",
+		"typescript": "~4.7.4",
+		"vite": "^3.0.4"
 	},
 	"type": "module",
 	"dependencies": {
-		"firebase": "^9.6.8",
-		"svelte-fa": "^2.4.0"
+		"firebase": "^9.9.1",
+		"svelte-fa": "^3.0.3"
 	}
 }
