@@ -6,8 +6,10 @@
 	import { goto } from "$app/navigation"
 	import { browser } from "$app/env"
 
-	const callback = (form) => {
-		newUser(form["email"], form["password"])
+	const callback = async (form) => {
+		const { error } = await newUser(form["email"], form["password"])
+
+		return error
 	}
 
 	session.subscribe(async ({ user, ready }) => {

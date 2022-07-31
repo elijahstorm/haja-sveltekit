@@ -8,8 +8,14 @@
 	import { browser } from "$app/env"
 
 	const callback = async (form) => {
-		formSent = lostPassword(form["email"])
 		started = true
+		formSent = lostPassword(form["email"])
+		return ""
+	}
+
+	const retry = () => {
+		started = false
+		formSent = null
 	}
 
 	let formSent
@@ -29,7 +35,10 @@
 				Sending....
 			{:then response}
 				{#if response.error}
-					{response.error}
+					<p>
+						{response.error}
+					</p>
+					<button class="button" on:click={retry}>Retry</button>
 				{:else}
 					A password change email was sent
 				{/if}
@@ -52,3 +61,9 @@
 		</FormInfoRequestCard>
 	{/if}
 </SmallCenterContentOverBackground>
+
+<style>
+	button {
+		margin: 1rem auto;
+	}
+</style>

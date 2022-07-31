@@ -10,6 +10,7 @@ import {
 	getDocs,
 	getFirestore,
 	limit,
+	orderBy,
 	query,
 	QuerySnapshot,
 	serverTimestamp,
@@ -32,7 +33,7 @@ import {
 	type UserCredential
 } from "firebase/auth"
 import session from "./session"
-import type { AllContentTypes } from "$lib/content/Content"
+import type { AllContentTypes, SendContentConfig } from "$lib/content/Content"
 import { ErrorMessaging } from "./errors"
 
 const firebaseConfig = {
@@ -155,7 +156,7 @@ export const getDocument: (data: {
 }
 
 export const uploadDocument: (data: {
-	content: AllContentTypes
+	content: SendContentConfig
 	source?: string
 	type?: string
 	isTeam?: boolean
@@ -165,7 +166,7 @@ export const uploadDocument: (data: {
 	source = null,
 	type = null,
 	isTeam = false,
-	timestamp = "date"
+	timestamp = "created"
 }) => {
 	let api = isTeam ? "teams" : "users"
 
@@ -182,7 +183,7 @@ export const uploadDocument: (data: {
 
 export const updateDocument: (data: {
 	id: string
-	content: AllContentTypes
+	content: SendContentConfig
 	source?: string
 	type?: string
 	isTeam?: boolean
@@ -193,7 +194,7 @@ export const updateDocument: (data: {
 	source = null,
 	type = null,
 	isTeam = false,
-	timestamp = "date"
+	timestamp = "edited"
 }) => {
 	let api = isTeam ? "teams" : "users"
 
@@ -215,6 +216,7 @@ export const storeQuery: (data: {
 	isTeam?: boolean
 	type?: string
 	amount?: number
+	timestamp?: string
 	queries: {
 		type: string
 		compare: WhereFilterOp
@@ -225,6 +227,7 @@ export const storeQuery: (data: {
 	isTeam = false,
 	type = null,
 	amount = 50,
+	timestamp = "date",
 	queries
 }) => {
 	const queryList = queries.map((query) => {
@@ -237,5 +240,7 @@ export const storeQuery: (data: {
 		api += `/${source}/${type}`
 	}
 
-	return getDocs(query(collection(db, api), ...queryList, limit(amount)))
+	return getDocs(
+		query(collection(db, api), ...queryList, orderBy(timestamp, "desc"), limit(amount))
+	)
 }

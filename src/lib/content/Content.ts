@@ -17,3 +17,11 @@ export type Content<K extends keyof ContentConfig = keyof ContentConfig> = {
 }
 
 export type AllContentTypes = TeamContentConfig | TodoContentConfig | UserContentConfig
+
+export interface SendContentConfig {
+	id?: string
+	title?: string
+	caption?: string
+	contentType?: ContentType
+	[type: string]: any
+}

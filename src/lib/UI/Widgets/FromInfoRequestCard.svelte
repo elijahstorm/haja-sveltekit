@@ -11,14 +11,14 @@
 	]
 
 	export let error: string = ""
-	export let callback: (form) => void = (form) => {}
+	export let callback: (form) => Promise<string | null> = async (form) => ""
 
 	let formElement
 
 	$: requestSent = false
 	$: attempted = false
 
-	function sendRequest() {
+	const sendRequest = async () => {
 		attempted = true
 		error = validateForm()
 
@@ -27,10 +27,10 @@
 		}
 
 		requestSent = true
-		callback(formElement)
+		error = (await callback(formElement)) ?? ""
 	}
 
-	function validateForm(): string {
+	const validateForm = (): string => {
 		error = null
 		let password
 
@@ -40,12 +40,8 @@
 
 			if (input.type == "password") {
 				password = value
-
-				if (value.length < 8) {
-					return `Please enter a valid ${input.type}.`
-				}
 			} else if (input.id == "pass_confirm" && value != password) {
-				return `Passwords don't match`
+				return "Passwords don't match"
 			}
 		}
 
