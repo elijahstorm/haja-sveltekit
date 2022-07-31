@@ -1,4 +1,4 @@
-import { storeQuery } from "$lib/firebase/firebase"
+import { storeQuery } from "$lib/firebase/firestore"
 import type { DocumentData, QuerySnapshot } from "firebase/firestore"
 import type { TodoContentConfig } from "./TodoContent"
 

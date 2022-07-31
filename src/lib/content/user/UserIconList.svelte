@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { awaitMyId } from "$lib/firebase/firebase"
+	import { awaitMyId } from "$lib/firebase/auth"
 	import Loader from "$lib/UI/Widgets/Loader.svelte"
 	import { getUser } from "./UserContent"
 	import UserIcon from "./UserIcon.svelte"

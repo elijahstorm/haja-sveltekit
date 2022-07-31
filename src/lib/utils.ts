@@ -13,3 +13,5 @@ export const post = async <T>(endpoint: string, data: object): Promise<Response<
 		}
 	}).then((r) => r.json())
 }
+
+export const pipe: <T>(...fncs: ((v) => any)[]) => T = (...fns) => fns.reduce((v, f) => f(v), null)

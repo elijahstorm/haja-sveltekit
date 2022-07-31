@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte"
-	import { loginWithInfo, loginWithGoogle, loginWithFacebook } from "$lib/firebase/firebase"
+	import { loginWithInfo, loginWithGoogle, loginWithFacebook } from "$lib/firebase/auth"
 	import { fade } from "svelte/transition"
 	import Icon from "@iconify/svelte"
 

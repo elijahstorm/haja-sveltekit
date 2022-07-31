@@ -1,4 +1,5 @@
-import { awaitMyId, storeQuery } from "$lib/firebase/firebase"
+import { awaitMyId } from "$lib/firebase/auth"
+import { storeQuery } from "$lib/firebase/firestore"
 import type { DocumentData, QuerySnapshot } from "firebase/firestore"
 import type { TeamContentConfig } from "./TeamContent"
 

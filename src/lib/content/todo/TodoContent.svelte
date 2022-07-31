@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { TodoContentConfig } from "./TodoContent"
 	import Icon from "@iconify/svelte"
-	import { updateDocument } from "$lib/firebase/firebase"
+	import { updateDocument } from "$lib/firebase/firestore"
 
 	export let todo: TodoContentConfig
 	export let source: string
@@ -76,7 +76,7 @@
 		cursor: pointer;
 		position: relative;
 	}
-	.icon > div {
+	/* .icon > div {
 		position: absolute;
 		top: 0;
 		width: 30px;
@@ -90,7 +90,6 @@
 	.icon > .animator {
 		background: linear-gradient(var(--bg), var(--bg), transparent, transparent, transparent);
 	}
-	/* .icon:hover > .animator { */
 	.icon:hover > .animator {
 		animation-name: rotate;
 		animation-duration: 7s;
@@ -105,7 +104,7 @@
 	}
 	.icon:hover > .blocker {
 		display: block;
-	}
+	} */
 	@keyframes rotate {
 		from {
 			transform: rotate(0);

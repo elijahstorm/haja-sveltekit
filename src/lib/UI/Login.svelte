@@ -2,7 +2,7 @@
 	import { browser } from "$app/env"
 	import { goto } from "$app/navigation"
 	import UserIcon from "$lib/content/user/UserIcon.svelte"
-	import { signOut } from "$lib/firebase/firebase"
+	import { signOut } from "$lib/firebase/auth"
 	import session from "$lib/firebase/session"
 	import type { UserInfo } from "firebase/auth"
 	import Icon from "@iconify/svelte"

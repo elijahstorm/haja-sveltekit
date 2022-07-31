@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { TodoColor, TodoContentConfig } from "./TodoContent"
-	import { myId, uploadDocument } from "$lib/firebase/firebase"
+	import { myId } from "$lib/firebase/auth"
+	import { uploadDocument } from "$lib/firebase/firestore"
 	import Icon from "@iconify/svelte"
 
 	export let source: string = myId()

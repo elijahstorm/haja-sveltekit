@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getUser } from "$lib/content/user/UserContent"
 	import UserFullPage from "$lib/content/user/UserFullPage.svelte"
-	import { myId } from "$lib/firebase/firebase"
+	import { myId } from "$lib/firebase/auth"
 	import ProtectedPage from "$lib/UI/PageContainers/ProtectedPage.svelte"
 	import Loader from "$lib/UI/Widgets/Loader.svelte"
 </script>

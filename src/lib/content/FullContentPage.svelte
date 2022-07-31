@@ -7,7 +7,7 @@
 	import TodoList from "$lib/content/todo/TodoList.svelte"
 	import { getTodoList } from "$lib/content/todo/TodoList"
 	import GlassyButton from "$lib/UI/Widgets/GlassyButton.svelte"
-	import { myId } from "$lib/firebase/firebase"
+	import { myId } from "$lib/firebase/auth"
 	import type { TeamContentConfig } from "$lib/content/team/TeamContent"
 
 	export let entity: UserContentConfig | TeamContentConfig

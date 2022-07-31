@@ -1,4 +1,4 @@
-import { getDocument } from "$lib/firebase/firebase"
+import { getDocument } from "$lib/firebase/firestore"
 import type { ContentConfig } from "../Content"
 
 export interface UserContentConfig extends ContentConfig {
