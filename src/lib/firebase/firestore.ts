@@ -21,12 +21,8 @@ import {
 import type { SendContentConfig } from "$lib/content/Content"
 import { firebaseApp } from "./firebase"
 import { pipe } from "$lib/utils"
-import { recentRequests } from "./stores"
 
 const db = getFirestore(firebaseApp)
-
-const requestLimit = 100,
-	requestTimeout = 36000000 // 10 minutes in milliseconds
 
 type StoreLocation = {
 	id?: string
@@ -135,15 +131,16 @@ export const storeQuery: (
 	amount = 50,
 	timestamp = "date",
 	queries
-}) => {
-	const queryList = queries.map((query) => {
-		return where(query.type, query.compare, query.value)
-	})
-
-	return pipe(
+}) =>
+	pipe(
 		api({ source, isTeam, type }),
 		connect(collection),
-		(v) => query(v, ...queryList, orderBy(timestamp, "desc"), limit(amount)),
+		(v) =>
+			query(
+				v,
+				...queries.map((query) => where(query.type, query.compare, query.value)),
+				orderBy(timestamp, "desc"),
+				limit(amount)
+			),
 		getDocs
 	)
-}

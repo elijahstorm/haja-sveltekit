@@ -9,28 +9,27 @@
 
 	const img404 = "/404.png"
 	const width = 30
-	const timeStr = new Date(todo.date).toLocaleTimeString([], {
+
+	$: timeStr = new Date(todo.date).toLocaleTimeString([], {
 		hour: "2-digit",
 		minute: "2-digit"
 	})
-	const dateStr = new Date(todo.date).toLocaleDateString([], {
+	$: dateStr = new Date(todo.date).toLocaleDateString([], {
 		weekday: "short",
 		year: "numeric",
 		month: "short",
 		day: "numeric"
 	})
-
-	let { status, color } = todo
-	$: icon = status == "done" ? "akar-icons:circle-check-fill" : "akar-icons:circle"
-	color = color == "" ? "var(--primary)" : color
+	$: icon = todo.status == "done" ? "akar-icons:circle-check-fill" : "akar-icons:circle"
+	$: color = todo.color == "" ? "var(--primary)" : todo.color
 
 	const toggleDone = () => {
-		status = status == "done" ? "todo" : "done"
+		const status = todo.status == "done" ? "todo" : "done"
 
 		updateDocument({
 			id: todo.id,
-			source: source,
-			isTeam: isTeam,
+			source,
+			isTeam,
 			type: "todo",
 			content: {
 				status
@@ -39,7 +38,9 @@
 	}
 </script>
 
-{#if status != "[broken]"}
+{#if todo.status == "[broken]"}
+	<img src={img404} alt="todo not found" />
+{:else}
 	<div class="flex">
 		<div class="icon" on:click|preventDefault={toggleDone}>
 			<Icon {color} {width} {icon} />
@@ -53,8 +54,6 @@
 			</span>
 		</div>
 	</div>
-{:else}
-	<img src={img404} alt="todo not found" />
 {/if}
 
 <style>
