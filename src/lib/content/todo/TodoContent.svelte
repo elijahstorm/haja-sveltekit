@@ -25,6 +25,7 @@
 
 	const toggleDone = () => {
 		const status = todo.status == "done" ? "todo" : "done"
+		todo.status = status
 
 		updateDocument({
 			id: todo.id,

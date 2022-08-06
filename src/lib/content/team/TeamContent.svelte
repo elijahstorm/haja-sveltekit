@@ -5,7 +5,7 @@
 
 	export let team: TeamContentConfig
 
-	const { users } = team
+	$: users = team.users
 </script>
 
 <FullContentPage entity={team} isTeam={true}>
